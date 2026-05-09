@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar = ({ toggleTheme, theme }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,13 +17,40 @@ const Navbar = ({ toggleTheme, theme }) => {
   }, []);
 
   const navLinks = [
-    { name: 'Home', href: '/#home' },
-    { name: 'About', href: '/#about' },
-    { name: 'Skills', href: '/#skills' },
-    { name: 'Projects', href: '/#projects' },
-    { name: 'Experience', href: '/#experience' },
-    { name: 'Contact', href: '/#contact' },
+    { name: 'Home', id: 'home' },
+    { name: 'About', id: 'about' },
+    { name: 'Skills', id: 'skills' },
+    { name: 'Projects', id: 'projects' },
+    { name: 'Experience', id: 'experience' },
+    { name: 'Contact', id: 'contact' },
   ];
+
+  const handleNavClick = (e, id) => {
+    e.preventDefault();
+    setIsOpen(false);
+
+    if (location.pathname === '/') {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      navigate(`/#${id}`);
+    }
+  };
+
+  // Add listener for hash change after navigation from other pages
+  useEffect(() => {
+    if (location.pathname === '/' && location.hash) {
+      const id = location.hash.replace('#', '');
+      const element = document.getElementById(id);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    }
+  }, [location]);
 
   return (
     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
@@ -43,8 +71,8 @@ const Navbar = ({ toggleTheme, theme }) => {
               {navLinks.map((link) => (
                 <li key={link.name}>
                   <a 
-                    href={link.href}
-                    onClick={() => setIsOpen(false)}
+                    href={`#${link.id}`}
+                    onClick={(e) => handleNavClick(e, link.id)}
                     className="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                   >
                     {link.name}
@@ -91,8 +119,8 @@ const Navbar = ({ toggleTheme, theme }) => {
               {navLinks.map((link) => (
                 <li key={link.name}>
                   <a 
-                    href={link.href} 
-                    onClick={() => setIsOpen(false)}
+                    href={`#${link.id}`}
+                    onClick={(e) => handleNavClick(e, link.id)}
                     className="block text-lg font-medium text-gray-600 dark:text-gray-300 hover:text-blue-600"
                   >
                     {link.name}
