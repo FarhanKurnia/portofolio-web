@@ -63,7 +63,7 @@ const Home = () => {
               View My Work
             </a>
             <a 
-              href="/Resume-BackendDeveloper-ETS-ENG.pdf" 
+              href={`${import.meta.env.BASE_URL}Resume-BackendDeveloper-ETS-ENG.pdf`} 
               download="Resume-BackendDeveloper-ETS-ENG.pdf"
               className="btn-outline w-full sm:w-auto"
             >

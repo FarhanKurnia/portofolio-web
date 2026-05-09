@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import profileImg from '../assets/profile.webp';
 
 const About = () => {
   return (
@@ -25,8 +26,7 @@ const About = () => {
             <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
               <img 
-                // src="https://via.placeholder.com/400x500" 
-                src="/src/assets/profile.webp" 
+                src={profileImg} 
                 alt="Farhan Kurnia" 
                 className="relative rounded-2xl shadow-2xl w-full object-cover aspect-[4/5]"
               />
